@@ -312,9 +312,10 @@ class MCQGenerator:
         key_distractor_list = self.get_distractors(keyword_sentence_mapping)
         return self.generate_mcqs_from_data(keyword_sentence_mapping, key_distractor_list)
 
-
     def generate_mcqs_from_data(self, keyword_sentence_mapping, key_distractor_list):
         import re
+        import random
+
         option_choices = ['a', 'b', 'c', 'd']
 
         for keyword in key_distractor_list:
@@ -326,8 +327,9 @@ class MCQGenerator:
 
                 distractors = list(key_distractor_list[keyword])
 
-                # Add the keyword as a distractor if not already present
-                distractors.append(keyword)
+                # Add the keyword as a distractor only if it's not already present
+                if keyword not in distractors:
+                    distractors.append(keyword)
 
                 # Shuffle distractors and select 3 unique distractors
                 distractors = random.sample(distractors, min(4, len(distractors)))
